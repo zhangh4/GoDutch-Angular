@@ -1,12 +1,29 @@
 ﻿<div class="panel panel-primary">
     <div class="panel-heading">
-        <span ng-show="!newFamilyBeingCreated">
-                <button  class="btn btn-primary" (click)="toggleAddButton()">Add New Family</button>
+        <div *ngIf='!newFamilyBeingCreated'>
+                <button  class="btn btn-primary" (click)="onAddButtonClicked()">Add New Family</button>
+        </div>
+        <span *ngIf='newFamilyBeingCreated'>
+            <input type="text" [(ngModel)]='newFamilyName' />
+            <input type="text" [(ngModel)]='newFamilyHeadCount' />
+            <button  class="btn btn-primary" (click)="onCreateButtonClicked()">Save</button>
+            <button  class="btn btn-primary" (click)="onCancelButtonClicked()">Cancel</button>
+            {{errorMessage}}
         </span>
-        <span ng-show="newFamilyBeingCreated">
-            <input type="text" ng-Model="newFamilyName" />
-            <button  class="btn btn-primary" (click)="toggleAddButton()">Save</button>
-        </span>
+    </div>
+    <div class="panel-heading">
+        <table class="table-bordered" *ngIf='families && families.length'>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Head Count</th>
+                </tr>
+            </thead>
+            <tr *ngFor='let family of families'>
+                <td>{{family.name}}</td>
+                <td>{{family.headCount}}</td>
+            </tr>
+        </table>
         
     </div>
 </div>

@@ -21,23 +21,31 @@ export class FamilyComponent implements OnInit {
         this.getAllFamilies();
     }
 
-    toggleAddButton(): void {
-        this.newFamilyBeingCreated = !this.newFamilyBeingCreated;
+    onAddButtonClicked(): void {
+        this.newFamilyBeingCreated = true;
     }
 
-    createButtonClicked(): void {
+    onCreateButtonClicked(): void {
         this.familyService.create(this.newFamilyName, this.newFamilyHeadCount)
             .subscribe(
-                data => {},
-                error => this.errorMessage = error);
-        this.resetToEmptyNewFamily();
-        this.getAllFamilies();
+                data => {
+                    this.resetToEmptyNewFamily();
+                    this.getAllFamilies();
+                },
+                error => {
+                    this.errorMessage = error;
+                });
+    }
+
+    onCancelButtonClicked(): void {
+        this.resetToEmptyNewFamily();        
     }
 
     private resetToEmptyNewFamily(): void {
         this.newFamilyName = '';
         this.newFamilyHeadCount = 0;
         this.newFamilyBeingCreated = false;
+        this.errorMessage = '';
     }
 
     private getAllFamilies() {

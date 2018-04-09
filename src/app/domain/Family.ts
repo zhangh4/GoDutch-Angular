@@ -3,7 +3,7 @@ export class Family {
     static create(id: number, name: string, headCount: number = 0): Family {
         let trimmedName: string = name.trim();
         if(trimmedName === '') throw new Error('Family name is empty');
-        if(!Number.isInteger(headCount) || headCount < 0) throw new Error(`Family head count is invalid: ${headCount}`);
+        if(headCount < 0) throw new Error(`Family head count is invalid: ${headCount}`);
 
         return new Family(id, trimmedName, headCount);
     }
