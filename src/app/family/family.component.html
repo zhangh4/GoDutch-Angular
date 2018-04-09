@@ -1,0 +1,12 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">
+        <span ng-show="!newFamilyBeingCreated">
+                <button  class="btn btn-primary" (click)="toggleAddButton()">Add New Family</button>
+        </span>
+        <span ng-show="newFamilyBeingCreated">
+            <input type="text" ng-Model="newFamilyName" />
+            <button  class="btn btn-primary" (click)="toggleAddButton()">Save</button>
+        </span>
+        
+    </div>
+</div>
