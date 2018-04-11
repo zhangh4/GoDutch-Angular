@@ -16,7 +16,7 @@ export class FamilyListComponent implements OnInit {
         this.getAllFamilies();
     }
 
-    onFamilyAdded(family: Family): void {
+    onFamilyUpserted(family: Family): void {
         this.getAllFamilies();
     }
 

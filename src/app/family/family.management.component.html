@@ -12,8 +12,8 @@
         </ng-template>
     </ng-template>
     <ng-template #writeModeBlock>
-            <input type="text" [(ngModel)]='family.name' />
-            <input type="text" [(ngModel)]='family.headCount' />
+            <input type="text" [(ngModel)]='value.name' />
+            <input type="text" [(ngModel)]='value.headCount' />
             <button class="btn btn-primary" (click)="onSaveButtonClicked()">Save</button>
             <button class="btn btn-primary" (click)="onCancelButtonClicked()">Cancel</button>
             {{errorMessage}}

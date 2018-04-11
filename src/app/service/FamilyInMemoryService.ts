@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { _throw } from 'rxjs/observable/throw';
+import { FamilyValue } from '../domain/FamilyValue';
 
 @Injectable()
 export class FamilyInMemoryService extends FamilyService {
@@ -13,22 +14,30 @@ export class FamilyInMemoryService extends FamilyService {
 
     private families: Family[] = [];
 
-    upsert(family: Family): Observable<Family> {
+    upsert(id: number | undefined, value: FamilyValue): Observable<Family> {
         try {
-            Family.cleanse(family);
-            if (_.find(this.families, f => f !== family && f.name === family.name)) throw new Error(`Family already exists with name = ${family.name}`);
-            if(family.id){
-                // let index = _.findIndex(this.families, f => f.id === family.id);
-                // if(index === -1) throw new Error(`Family does not exist for update with id = ${family.id}`);
-                
-                // this.families.splice(index, 1, family);
-            }
-            else {
-                family.id = FamilyInMemoryService.seed++;
-                this.families.push(family);
+            FamilyValue.cleanse(value);
+            if (_.find(this.families, f => f.id !== id && f.name === value.name)) {
+                throw new Error(`Family already exists with name = ${value.name}`);
             }
             
-            return of(family);
+            let familyToUpsert: Family;
+            if(id){
+                let index = _.findIndex(this.families, f => f.id === id);
+                if(index === -1){
+                    throw new Error(`Family does not exist for update with id = ${id}`);
+                } 
+                else {
+                    familyToUpsert = Family.fromValue(id, value);
+                    this.families.splice(index, 1, familyToUpsert);    
+                }
+            }
+            else {
+                familyToUpsert = Family.fromValue(FamilyInMemoryService.seed++, value);
+                this.families.push(familyToUpsert);
+            }
+            
+            return of(familyToUpsert);
         }
         catch (e) {
             // return Observable.throw("hello");

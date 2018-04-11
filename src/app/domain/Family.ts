@@ -1,16 +1,12 @@
-export class Family {
+import { FamilyValue } from "./FamilyValue";
 
-    static cleanse(family: Family) {
-        family.name = family.name.trim();
-        if(family.name === '') throw new Error('Family name is empty');
-        if(family.headCount < 0) throw new Error(`Family head count is invalid: ${family.headCount}`);
+export class Family extends FamilyValue {
+
+    static fromValue(id: number, value: FamilyValue): Family {
+        return new Family(id, value.name, value.headCount);
     }
 
-    static createEmpty(): Family {
-        return new Family(null, '', 0);
-    }
-
-    private constructor(public id: number | null, public name: string, public headCount: number = 0){
-
+    constructor(public readonly id: number, public readonly name: string, public readonly headCount: number = 0){
+        super(name, headCount);
     }
 }
