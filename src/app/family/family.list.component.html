@@ -1,0 +1,11 @@
+﻿<div class="panel panel-primary">
+    
+    <div class="panel-heading">
+        <family-management (onFamilyAdded)='onFamilyManaged($event)'></family-management>
+    </div>
+
+    <div>Existing Families</div>
+    <div>
+        <family-management *ngFor='let family of families' [family]='family'></family-management>
+    </div>
+</div>

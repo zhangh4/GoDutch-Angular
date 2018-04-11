@@ -1,0 +1,21 @@
+<div class="panel-heading">
+    <div *ngIf="!isWriteMode; then readModeBlock else writeModeBlock"></div>
+    <ng-template #readModeBlock>
+        <div *ngIf="!isUpdateMode; then addModeBlock else updateModeBlock"></div>
+        <ng-template #addModeBlock>
+                <button class="btn btn-primary" (click)="onStartButtonClicked()">Add New Family</button>
+        </ng-template>
+        <ng-template #updateModeBlock>
+                <span>{{family.name}}</span>
+                <span>{{family.headCount}}</span>
+                <button class="btn btn-primary" (click)="onStartButtonClicked()">Edit</button>
+        </ng-template>
+    </ng-template>
+    <ng-template #writeModeBlock>
+            <input type="text" [(ngModel)]='family.name' />
+            <input type="text" [(ngModel)]='family.headCount' />
+            <button class="btn btn-primary" (click)="onSaveButtonClicked()">Save</button>
+            <button class="btn btn-primary" (click)="onCancelButtonClicked()">Cancel</button>
+            {{errorMessage}}
+    </ng-template>
+</div>
